@@ -1,0 +1,37 @@
+{
+  "name": "hypixel-proxy",
+  "version": "1.0.0",
+  "description": "Production-ready Hypixel API Proxy for Seraph client",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "pm2:start": "pm2 start ecosystem.config.js",
+    "pm2:stop": "pm2 stop hypixel-proxy",
+    "pm2:restart": "pm2 restart hypixel-proxy",
+    "pm2:logs": "pm2 logs hypixel-proxy",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fastify/compress": "^8.0.0",
+    "@fastify/cors": "^10.0.0",
+    "@fastify/helmet": "^13.0.0",
+    "@fastify/rate-limit": "^10.0.0",
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "fastify": "^5.2.1",
+    "ioredis": "^5.4.2",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.6",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
