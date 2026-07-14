@@ -26,12 +26,8 @@ export const config = {
   },
 
   redis: {
-    url: optionalEnv('REDIS_URL', ''),
-    host: optionalEnv('REDIS_HOST', '127.0.0.1'),
-    port: parseInt(optionalEnv('REDIS_PORT', '6379'), 10),
-    password: optionalEnv('REDIS_PASSWORD', ''),
-    db: parseInt(optionalEnv('REDIS_DB', '0'), 10),
-    tls: optionalEnv('REDIS_TLS', 'false') === 'true',
+    restUrl: requireEnv('UPSTASH_REDIS_REST_URL'),
+    restToken: requireEnv('UPSTASH_REDIS_REST_TOKEN'),
   },
 
   cache: {

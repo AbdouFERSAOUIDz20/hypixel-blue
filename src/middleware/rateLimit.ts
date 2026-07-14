@@ -1,6 +1,5 @@
 import type { FastifyInstance } from 'fastify';
 import rateLimit from '@fastify/rate-limit';
-import { getRedisClient } from '../cache/redis';
 import { config } from '../config/index';
 
 export async function registerRateLimit(app: FastifyInstance): Promise<void> {
@@ -8,9 +7,7 @@ export async function registerRateLimit(app: FastifyInstance): Promise<void> {
     global: true,
     max: config.rateLimit.max,
     timeWindow: config.rateLimit.windowMs,
-    redis: getRedisClient(),
     keyGenerator: (request) => {
-      // Prefer CF-Connecting-IP (set by Cloudflare) to prevent spoofing
       const cfIp = request.headers['cf-connecting-ip'];
       if (typeof cfIp === 'string' && cfIp) return cfIp;
       return request.ip;
