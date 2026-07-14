@@ -1,4 +1,6 @@
-import 'dotenv/config';
+import path from 'path';
+import dotenv from 'dotenv';
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
 import Fastify, { type FastifyError } from 'fastify';
 import compress from '@fastify/compress';
 import { config } from './config/index';
