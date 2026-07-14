@@ -6,12 +6,10 @@ let client: Redis | null = null;
 export function getRedisClient(): Redis {
   if (client) return client;
 
-  const redisConfig: RedisOptions = {
-    host: config.redis.host,
-    port: config.redis.port,
-    db: config.redis.db,
+  const sharedOptions: RedisOptions = {
     lazyConnect: true,
     maxRetriesPerRequest: 3,
+    tls: config.redis.tls ? {} : undefined,
     retryStrategy: (times: number) => {
       if (times > 5) return null;
       return Math.min(times * 200, 2000);
@@ -22,11 +20,20 @@ export function getRedisClient(): Redis {
     },
   };
 
-  if (config.redis.password) {
-    redisConfig.password = config.redis.password;
+  if (config.redis.url) {
+    client = new Redis(config.redis.url, sharedOptions);
+  } else {
+    const redisConfig: RedisOptions = {
+      ...sharedOptions,
+      host: config.redis.host,
+      port: config.redis.port,
+      db: config.redis.db,
+    };
+    if (config.redis.password) {
+      redisConfig.password = config.redis.password;
+    }
+    client = new Redis(redisConfig);
   }
-
-  client = new Redis(redisConfig);
 
   client.on('connect', () => {
     console.info('[Redis] Connected');
