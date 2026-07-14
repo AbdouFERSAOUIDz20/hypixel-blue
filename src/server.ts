@@ -102,11 +102,14 @@ async function start(): Promise<void> {
   try {
     await connectRedis();
     app = await build();
-
     await app.listen({ port: config.server.port, host: config.server.host });
     app.log.info(`Hypixel Proxy listening on ${config.server.host}:${config.server.port}`);
   } catch (err) {
-    console.error('Failed to start server:', err);
+    if (app) {
+      app.log.error({ err }, 'Failed to start server');
+    } else {
+      console.error('Failed to start server:', err);
+    }
     process.exit(1);
   }
 

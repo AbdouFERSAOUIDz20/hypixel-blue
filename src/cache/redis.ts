@@ -52,7 +52,11 @@ export function getRedisClient(): Redis {
 
 export async function connectRedis(): Promise<void> {
   const redis = getRedisClient();
-  await redis.connect();
+  try {
+    await redis.connect();
+  } catch (err) {
+    console.warn('[Redis] Initial connection failed — will retry in background:', (err as Error).message);
+  }
 }
 
 export async function disconnectRedis(): Promise<void> {
