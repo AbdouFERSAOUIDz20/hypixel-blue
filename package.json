@@ -4,7 +4,7 @@
   "description": "Production-ready Hypixel API Proxy for Seraph client",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc --project tsconfig.json",
+    "build": "npx tsc --project tsconfig.json",
     "start": "node dist/server.js",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "pm2:start": "pm2 start ecosystem.config.js",
@@ -12,7 +12,7 @@
     "pm2:restart": "pm2 restart hypixel-proxy",
     "pm2:logs": "pm2 logs hypixel-proxy",
     "lint": "eslint src --ext .ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "npx tsc --noEmit"
   },
   "dependencies": {
     "@fastify/compress": "^8.0.0",
