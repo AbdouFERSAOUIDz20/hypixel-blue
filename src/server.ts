@@ -14,6 +14,7 @@ import { guildRoute } from './routes/guild';
 import { recentGamesRoute } from './routes/recentgames';
 import { keyRoute } from './routes/key';
 import { healthRoute } from './routes/health';
+import { statsRoute } from './routes/stats';
 
 async function build(): Promise<ReturnType<typeof Fastify>> {
   const app = Fastify({
@@ -58,6 +59,7 @@ async function build(): Promise<ReturnType<typeof Fastify>> {
   await app.register(guildRoute);
   await app.register(recentGamesRoute);
   await app.register(keyRoute);
+  await app.register(statsRoute);
 
   // ── 404 Handler ───────────────────────────────────────────────────────────────
   app.setNotFoundHandler((_request, reply) => {
